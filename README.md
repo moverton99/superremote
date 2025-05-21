@@ -1,54 +1,88 @@
-# React + TypeScript + Vite
+# SuperRemote
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SuperRemote is a cross-platform, extensible universal remote control system built with React, Capacitor, and TypeScript. It is designed to support a wide range of devices such as AV receivers, TVs, set-top boxes, and streaming sticks through a modular, plugin-style architecture.
 
-Currently, two official plugins are available:
+## 🎯 Project Goals
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Support real-world device control over protocols like HTTP, Bluetooth, IR (via network blasters), and more.
+- Load device capabilities and command profiles from YAML definitions to simplify maintenance.
+- Allow users to configure custom control panels and macros from a local device registry.
+- Prioritize long-term maintainability and clarity over short-term shortcuts.
 
-## Expanding the ESLint configuration
+## 🧱 Architecture Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React + Material UI (Client)**: Provides the cross-platform UI via Capacitor.
+- **Device Registry**: Manages discovery and local persistence of known devices.
+- **Adapters**: Each protocol (HTTP, Bluetooth, IR) has its own adapter implementing a common `Device` interface.
+- **YAML Profiles**: Define device capabilities and commands in a declarative format. Inheritance is supported to reduce duplication.
+- **Local-Only Storage**: Device state and control configurations are stored per device (with export/import support).
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📁 Folder Structure
+
+```
+src/
+├── adapters/            # Device communication logic (e.g., bluetooth, http)
+│   ├── bluetooth/
+│   ├── http/
+│   └── ir/
+├── data/                # Device profiles in YAML format
+│   ├── devices/
+│   └── shared/
+├── hooks/               # React hooks (e.g., useDeviceRegistry)
+├── registry/            # DeviceRegistry class and helpers
+├── types/               # Core types like Device, Capability, etc.
+├── ui/                  # UI layout and components
+│   ├── components/
+│   ├── layout/
+│   └── pages/
+├── utils/               # General utilities
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1. Install dependencies
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
 ```
+
+### 2. Run the development server
+
+```bash
+npm run dev
+```
+
+### 3. Build for production
+
+```bash
+npm run build
+npx cap copy
+```
+
+### 4. Add Capacitor platforms (when ready)
+
+```bash
+npx cap add android
+npx cap add ios
+```
+
+## 📦 Tech Stack
+
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [Material UI](https://mui.com/)
+- [Capacitor](https://capacitorjs.com/)
+- TypeScript
+- YAML for capability definitions
+
+## 🤖 Developer Notes
+
+- All devices extend the `Device` base class and implement `connect`, `disconnect`, and `sendCommand`.
+- The `DeviceRegistry` supports in-browser persistence and JSON import/export.
+- Profiles in `data/devices/*.yaml` define available commands and parameters per device model or family.
+
+## 📂 Planned Extensions
+
+- Auto-discovery plugins (mDNS, Bluetooth scan)
+- Macro editor for custom command sequences
+- Per-device dynamic control panel generation
