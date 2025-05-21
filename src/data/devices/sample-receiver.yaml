@@ -1,0 +1,13 @@
+id: sample.receiver
+name: Sample Receiver
+type: audio
+connection: http
+capabilities:
+  - id: power_on
+    name: Power On
+  - id: power_off
+    name: Power Off
+  - id: volume_up
+    name: Volume Up
+  - id: volume_down
+    name: Volume Down
