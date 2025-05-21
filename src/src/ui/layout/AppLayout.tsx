@@ -33,17 +33,17 @@ export function AppLayout({ children }: PropsWithChildren) {
     };
 
     const drawer = (
-        <div>
+        <div role="navigation" aria-label="Device Navigation">
             <Toolbar>
                 <Typography variant="h6">Devices</Typography>
             </Toolbar>
             <Divider />
             <List>
                 {/* Placeholder items */}
-                <ListItemButton>
+                <ListItemButton tabIndex={0}>
                     <ListItemText primary="Receiver" />
                 </ListItemButton>
-                <ListItemButton>
+                <ListItemButton tabIndex={0}>
                     <ListItemText primary="TV" />
                 </ListItemButton>
             </List>
@@ -64,6 +64,8 @@ export function AppLayout({ children }: PropsWithChildren) {
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
+                        aria-controls="device-drawer"
+                        aria-expanded={mobileOpen}
                         edge="start"
                         onClick={handleDrawerToggle}
                         sx={{ mr: 2, display: { sm: 'none' } }}
@@ -79,9 +81,11 @@ export function AppLayout({ children }: PropsWithChildren) {
             <Box
                 component="nav"
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+                aria-label="Device Navigation"
             >
                 {isSmallScreen ? (
                     <Drawer
+                        id="device-drawer"
                         variant="temporary"
                         open={mobileOpen}
                         onClose={handleDrawerToggle}
@@ -95,6 +99,7 @@ export function AppLayout({ children }: PropsWithChildren) {
                     </Drawer>
                 ) : (
                     <Drawer
+                        id="device-drawer"
                         variant="permanent"
                         sx={{
                             display: { xs: 'none', sm: 'block' },

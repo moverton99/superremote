@@ -62,4 +62,22 @@ Create a YAML device profile loader that:
 
 ---
 
+---
+
+## ♿ Accessibility Standards
+
+All UI components should meet basic accessibility requirements:
+
+- Use semantic HTML elements where possible.
+- Ensure buttons, inputs, and interactive elements are keyboard-navigable.
+- Apply ARIA roles or labels where needed (e.g., `aria-label` on drawer buttons).
+- Ensure sufficient contrast for text and icons.
+- Use MUI’s built-in accessibility features (e.g., `aria-controls`, `aria-expanded`, `aria-label` on `IconButton`).
+
+Design with visual impairments in mind:
+- Large touch targets
+- Clear visual focus indicators
+- Avoid relying solely on color to convey information
+
+
 This file may be updated as project conventions evolve. Refer to it in future prompts to maintain consistency and quality.
