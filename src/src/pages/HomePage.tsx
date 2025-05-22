@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { AppLayout } from '../layout/AppLayout';
+import { useEffect, useState } from 'react';
+import { AppLayout } from '../ui/layout/AppLayout';
 import {
     ListItemButton,
     ListItemText,
