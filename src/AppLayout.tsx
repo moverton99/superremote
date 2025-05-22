@@ -15,6 +15,8 @@ import {
     Typography,
     useTheme,
     useMediaQuery,
+    ListItemButton,
+    ListItemText,
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -35,6 +37,10 @@ export const AppLayout: FC<AppLayoutProps> = ({ drawerItems, children }) => {
         setMobileOpen(!mobileOpen);
     };
 
+    const onDiscover = () => {
+        console.log('Discover button clicked');
+    };
+
     const drawer = (
         <div role="navigation" aria-label="Device Navigation">
             <Toolbar>
@@ -42,6 +48,9 @@ export const AppLayout: FC<AppLayoutProps> = ({ drawerItems, children }) => {
             </Toolbar>
             <Divider />
             <List>
+                <ListItemButton onClick={onDiscover} sx={{ bgcolor: 'action.hover', mb: 1 }}>
+                    <ListItemText primary="Discover..." />
+                </ListItemButton>
                 {drawerItems}
             </List>
         </div>
