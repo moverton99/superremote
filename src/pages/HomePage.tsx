@@ -7,6 +7,7 @@ import {
     Typography,
     Box,
 } from '@mui/material';
+import { DiscoverDialog } from '../components/DiscoverDialog';
 
 interface Device {
     id: string;
@@ -22,6 +23,10 @@ const mockDevices: Device[] = [
 export function HomePage() {
     const [devices, setDevices] = useState<Device[] | null>(null);
     const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [isDiscoverDialogOpen, setDiscoverDialogOpen] = useState(false);
+
+    const handleDiscoverOpen = () => setDiscoverDialogOpen(true);
+    const handleDiscoverClose = () => setDiscoverDialogOpen(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -31,15 +36,20 @@ export function HomePage() {
     }, []);
 
     const drawerItems = devices
-        ? devices.map((device) => (
-            <ListItemButton
-                key={device.id}
-                selected={device.id === selectedId}
-                onClick={() => setSelectedId(device.id)}
-            >
-                <ListItemText primary={device.name} />
-            </ListItemButton>
-        ))
+        ? [
+            <ListItemButton key="discover" onClick={handleDiscoverOpen} sx={{ bgcolor: 'action.hover', mb: 1 }}>
+                <ListItemText primary="Discover..." />
+            </ListItemButton>,
+            ...devices.map((device) => (
+                <ListItemButton
+                    key={device.id}
+                    selected={device.id === selectedId}
+                    onClick={() => setSelectedId(device.id)}
+                >
+                    <ListItemText primary={device.name} />
+                </ListItemButton>
+            )),
+        ]
         : new Array(3).fill(null).map((_, i) => (
             <Box key={i} sx={{ px: 2, py: 1 }}>
                 <Skeleton variant="text" width="80%" />
@@ -64,6 +74,7 @@ export function HomePage() {
             ) : (
                 <Typography>Select a device from the sidebar.</Typography>
             )}
+            <DiscoverDialog open={isDiscoverDialogOpen} onClose={handleDiscoverClose} />
         </AppLayout>
     );
 }
