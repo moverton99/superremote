@@ -1,4 +1,5 @@
 device: Yamaha YNCA PRotocol
+protocol: http
 port: 80
 
 discovery_check:

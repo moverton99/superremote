@@ -1,5 +1,3 @@
-// src/types/Device.ts
-
 export type DeviceConnectionType = 'http' | 'bluetooth' | 'ir' | 'custom';
 
 export interface DeviceCapability {
