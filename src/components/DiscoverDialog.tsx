@@ -13,11 +13,11 @@ import {
 } from '@mui/material';
 
 const categories = ['Receivers', 'TVs']; // Simulated categories
-const manufacturers = {
+const manufacturers: Record<string, string[]> = {
     Receivers: ['Yamaha'],
     TVs: [],
 };
-const models = {
+const models: Record<string, string[]> = {
     Yamaha: ['YamahaYNCA', 'yamaha.rx-a2a'],
 };
 
@@ -26,19 +26,20 @@ export const DiscoverDialog = ({ open, onClose }: { open: boolean; onClose: () =
     const [selectedManufacturer, setSelectedManufacturer] = useState('');
     const [selectedModel, setSelectedModel] = useState('');
 
-    const handleCategoryChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setSelectedCategory(event.target.value as string);
+    // Fixed event type compatibility for Material-UI Select components
+    const handleCategoryChange = (event: any) => {
+        setSelectedCategory(event.target.value);
         setSelectedManufacturer('');
         setSelectedModel('');
     };
 
-    const handleManufacturerChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setSelectedManufacturer(event.target.value as string);
+    const handleManufacturerChange = (event: any) => {
+        setSelectedManufacturer(event.target.value);
         setSelectedModel('');
     };
 
-    const handleModelChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setSelectedModel(event.target.value as string);
+    const handleModelChange = (event: any) => {
+        setSelectedModel(event.target.value);
     };
 
     const handleDiscover = () => {
@@ -51,8 +52,8 @@ export const DiscoverDialog = ({ open, onClose }: { open: boolean; onClose: () =
             <DialogTitle>Discover Devices</DialogTitle>
             <DialogContent>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <FormControl fullWidth>
-                        <InputLabel>Category</InputLabel>
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel shrink={true}>Category</InputLabel>
                         <Select
                             value={selectedCategory}
                             onChange={handleCategoryChange}
@@ -65,13 +66,13 @@ export const DiscoverDialog = ({ open, onClose }: { open: boolean; onClose: () =
                         </Select>
                     </FormControl>
 
-                    <FormControl fullWidth disabled={!selectedCategory}>
-                        <InputLabel>Manufacturer</InputLabel>
+                    <FormControl fullWidth margin="normal" disabled={!selectedCategory}>
+                        <InputLabel shrink={true}>Manufacturer</InputLabel>
                         <Select
                             value={selectedManufacturer}
                             onChange={handleManufacturerChange}
                         >
-                            {(manufacturers[selectedCategory] || []).map((manufacturer) => (
+                            {(manufacturers[selectedCategory] || []).map((manufacturer: string) => (
                                 <MenuItem key={manufacturer} value={manufacturer}>
                                     {manufacturer}
                                 </MenuItem>
@@ -79,13 +80,13 @@ export const DiscoverDialog = ({ open, onClose }: { open: boolean; onClose: () =
                         </Select>
                     </FormControl>
 
-                    <FormControl fullWidth disabled={!selectedManufacturer}>
-                        <InputLabel>Model</InputLabel>
+                    <FormControl fullWidth margin="normal" disabled={!selectedManufacturer}>
+                        <InputLabel shrink={true}>Model</InputLabel>
                         <Select
                             value={selectedModel}
                             onChange={handleModelChange}
                         >
-                            {(models[selectedManufacturer] || []).map((model) => (
+                            {(models[selectedManufacturer] || []).map((model: string) => (
                                 <MenuItem key={model} value={model}>
                                     {model}
                                 </MenuItem>
